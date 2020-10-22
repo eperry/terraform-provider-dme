@@ -49,5 +49,7 @@ jobs:
     - name: go build
       run: go build -o terraform-plugin-dir/terraform-provider-dme_v99.99.99_x4 .
 
+    - name: ls
+      run: find . -ls 
     - name: package artifact
       run: tar xvzf tf-provider-dme_v99.99.99_x4.tgz terraform-plugin-dir
