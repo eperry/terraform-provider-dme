@@ -48,10 +48,10 @@ jobs:
         path: terraform-plugin-dir
         key: ${{ runner.os }}-terraform-plugin-dir-${{ hashFiles('go.sum') }}-${{ hashFiles('dme/**') }}
     - name: go build
-      run: go build -o terraform-plugin-dir/terraform-provider-dme_v99.99.99_x4 .
+      run: go build -o terraform-plugin-dir/terraform-provider-dme_${GITHUB_REF#refs/tags/}_x4 .
 
     - name: package artifact
-      run: tar cvzf tf-provider-dme_v99.99.99_x4.tgz terraform-plugin-dir
+      run: tar cvzf tf-provider-dme_${GITHUB_REF#refs/tags/}_x4.tgz terraform-plugin-dir
 
     - name: Create Release
       id: create_release
@@ -77,7 +77,7 @@ jobs:
         # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
         # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./tf-provider-dme_v99.99.99_x4.tgz
-        asset_name: tf-provider-dme_v99.99.99_x4.tgz
+        asset_path: ./tf-provider-dme_${GITHUB_REF#refs/tags/}_x4.tgz
+        asset_name: tf-provider-dme_${GITHUB_REF#refs/tags/}_x4.tgz
         asset_content_type: application/tgz
 
